@@ -90,3 +90,4 @@ cvm 使用 InstanceName 字段, 也就是管理后台中可以修改的名称。
 [ansible]: http://www.ansible.com
 [dynamic inventory]: http://docs.ansible.com/intro_dynamic_inventory.html
 [qcloud]: https://cloud.tencent.com/
+[腾讯云地域列表](https://cloud.tencent.com/document/api/213/15692#.E5.9C.B0.E5.9F.9F.E5.88.97.E8.A1.A8)
