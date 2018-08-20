@@ -1,8 +1,8 @@
 # Qcloud Ansible Inventory
 
-[Qcloude][]'s Ansible  [Dynamic Inventory][] script
+Qcloude's Ansible Dynamic Inventory script
 
-[Ansible][] 是自动化配置工具，Dynamic Inventory 允许使用脚本获到需要配置的机器列表和信息。
+[Ansible](https://docs.ansible.com/) 是自动化配置工具，Dynamic Inventory 允许使用脚本获到需要配置的机器列表和信息。
 
 可以参考 hosts.yml 的示例 ansible playbook 如何为所有 cvm 生成 hosts 文件来方便访问，如果换成调用 DNSPod API 就能实现自动更新 DNS 记录。
 
@@ -18,22 +18,23 @@
 如果您还有其它的 inventory 条目，也放到 inventory 目录下，参考 ansible multiple inventory sources [相关文档](http://docs.ansible.com/intro_dynamic_inventory.html#using-multiple-inventory-sources)
 
 脚本 qcloud.py 使用 python 2，在默认 python 版本为 3 的环境下使用自行修改 qcloud.py 的第一行。
-
 该脚本依赖腾讯云的命令行工具，可以使用 `pip` 安装
-
-	sudo pip install tccli
-
+```
+sudo pip install tccli
+```
 ## 配置
 
 首先需要配置好 `tccli`
-
-	tccli configure
+```
+tccli configure
+```
 
 复制示例配置文件并进行修改。配置文件必须命名为 `qcloud.ini` 并且和 `qcloud.py` 在同一目录下。
 
-	cp inventory/qcloud.example.ini inventory/qcloud.ini
-
-然后配置 SSH 连接信息，cvm 对应云主机，配置中支持 Python 的 `%` 替换，比如 cvm 中的 `%(InstanceName)s` 会替换成云主机的名称。括号中可以是任何 `tccli` 返回结果中的字段，另外为了方便使用 IP，还有以下额外字段可以使用
+```
+cp inventory/qcloud.example.ini inventory/qcloud.ini
+```
+然后配置SSH连接信息，cvm对应云主机，配置中支持Python 的 `%` 替换，比如cvm中的 `%(InstanceName)s` 会替换成云主机的名称。括号中可以是任何 `tccli` 返回结果中的字段，另外为了方便使用 IP，还有以下额外字段可以使用
 
 -	`PublicIp` BGP 机房出口 IP
 -	`InnerIp` 内网 IP
@@ -48,33 +49,33 @@
 ## 测试
 
 直接运行脚本 `qcloud.py`，没有错误应该会打印出符合 ansible dynamic inventory 要求的 JSON，然后可以运行 ansible 列表所有机器
-
-	ansible all -i inventory --list-hosts
-
+```
+ansible all -i inventory --list-hosts
+```
 如果一切正常可以测试下 demo playbook hosts.yml
-
-	ansible-playbook hosts.yml
-
+```
+ansible-playbook hosts.yml
+```
 该 playbook 会在当前目录生成 hosts，如果覆盖 /etc/hosts 可以使用里面配置的主机名比如 `ops.cvm` 来访问 cvm 主机了。而如果云主机已经配置能使用 ubuntu sudo 进行 ansible 操作，那么这些主机名也更新到所有的云主机上了。
 
 ## 缓存
-
 示例配置中默认开启了缓存，如果改变了 qcloud 的设置想要立即更新主机信息，可以手动执行下面命令刷新缓存
 
-	inventory/qcloud.py --refresh-cache
-
+```
+inventory/qcloud.py --refresh-cache
+```
 还可以在inventory/qcloud.ini中关闭缓存功能
 
-    cache_disable = True
+```
+cache_disable = True
+```
 
 # 命名规则
-
 ## 主机名
 
 即相应资源在 ansible 中使用的 host 名称。
 
 cvm 使用 InstanceName 字段, 也就是管理后台中可以修改的名称。
-
 ## 主机组
 
 首先所有的资源都按照类型进行了分组，cvm 主机都属于 cvm 这个组。
@@ -84,10 +85,11 @@ cvm 使用 InstanceName 字段, 也就是管理后台中可以修改的名称。
 ## 主机变量名
 
 所有 API 返回结果以及上面提到的额外 IP 字段都会嵌套在主机变量 qcloud 下，比如在 jinja2 模板中引用出口 IP
-
-    {{ qcloud.PublicIp }}
-
-[ansible]: http://www.ansible.com
-[dynamic inventory]: http://docs.ansible.com/intro_dynamic_inventory.html
-[qcloud]: https://cloud.tencent.com/
-[腾讯云地域列表](https://cloud.tencent.com/document/api/213/15692#.E5.9C.B0.E5.9F.9F.E5.88.97.E8.A1.A8)
+``` yaml
+{{ qcloud.PublicIp }}
+```
+# 参考资料
+- [Ansible](http://www.ansible.com)
+- [dynamic inventory](http://docs.ansible.com/intro_dynamic_inventory.html)
+- [腾讯云](https://cloud.tencent.com/)
+- [腾讯云地域列表](https://cloud.tencent.com/document/api/213/15692#.E5.9C.B0.E5.9F.9F.E5.88.97.E8.A1.A8)
