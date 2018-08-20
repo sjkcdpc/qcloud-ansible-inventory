@@ -55,7 +55,7 @@
 
 	ansible-playbook hosts.yml
 
-该 playbook 会在当前目录生成 hosts，如果覆盖 /etc/hosts 可以使用里面配置的主机名比如 `ops.cvm` 来访问 ecs 主机了。而如果云主机已经配置能使用 ubuntu sudo 进行 ansible 操作，那么这些主机名也更新到所有的云主机上了。
+该 playbook 会在当前目录生成 hosts，如果覆盖 /etc/hosts 可以使用里面配置的主机名比如 `ops.cvm` 来访问 cvm 主机了。而如果云主机已经配置能使用 ubuntu sudo 进行 ansible 操作，那么这些主机名也更新到所有的云主机上了。
 
 ## 缓存
 
