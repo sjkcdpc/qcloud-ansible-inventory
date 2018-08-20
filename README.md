@@ -21,19 +21,19 @@
 
 该脚本依赖腾讯云的命令行工具，可以使用 `pip` 安装
 
-	sudo pip install tencentcloud-cli
+	sudo pip install tccli
 
 ## 配置
 
-首先需要配置好 `tencentcloud-cli`
+首先需要配置好 `tccli`
 
-	tencentcloud-cli configure
+	tccli configure
 
 复制示例配置文件并进行修改。配置文件必须命名为 `qcloud.ini` 并且和 `qcloud.py` 在同一目录下。
 
 	cp inventory/qcloud.example.ini inventory/qcloud.ini
 
-然后配置 SSH 连接信息，cvm 对应云主机，配置中支持 Python 的 `%` 替换，比如 cvm 中的 `%(InstanceName)s` 会替换成云主机的名称。括号中可以是任何 `tencentcloud-cli` 返回结果中的字段，另外为了方便使用 IP，还有以下额外字段可以使用
+然后配置 SSH 连接信息，cvm 对应云主机，配置中支持 Python 的 `%` 替换，比如 cvm 中的 `%(InstanceName)s` 会替换成云主机的名称。括号中可以是任何 `tccli` 返回结果中的字段，另外为了方便使用 IP，还有以下额外字段可以使用
 
 -	`PublicIp` BGP 机房出口 IP
 -	`InnerIp` 内网 IP
