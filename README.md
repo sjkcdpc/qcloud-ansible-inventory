@@ -74,15 +74,17 @@ cache_disable = True
 
 首先所有的资源都按照类型进行了分组，cvm主机都属于cvm这个组。
 
-另外cvm还支持自定义分组，规则是使用『描述』(对应 API 返回结果中的Description)。业务组名称使用英文逗号分隔之后并加上`des_` 前缀即为该主机要加入的Ansible主机组。比如主机ops的业务组名称是 `dev,public` 那么在Ansible中会包含在组`des_dev`和`des_public`中。Qcloud本身的Tag也会转成对应的分组，规则是`KEY_VALUE`。
+~~另外cvm还支持自定义分组，规则是使用『描述』(对应 API 返回结果中的Description)。业务组名称使用英文逗号分隔之后并加上`des_` 前缀即为该主机要加入的Ansible主机组。比如主机ops的业务组名称是 `dev,public` 那么在Ansible中会包含在组`des_dev`和`des_public`中。Qcloud本身的Tag也会转成对应的分组，规则是`KEY_VALUE`。~~
+> 腾讯云无描述字段，可以利用主机名以特定分割符然后添加组信息或者利用标签字段实现分组功能，需要自行研究解决
 
 ## 主机变量名
 所有API返回结果以及上面提到的额外IP字段都会嵌套在主机变量qcloud下，比如在jinja2模板中引用出口IP
 ``` yaml
-{{ qcloud.PublicIp }}
+{{ qcloud.PublicIpAddresses }}
 ```
 
 # 参考资料
+- [aliyun-ansible-inventory](https://github.com/doitian/aliyun-ansible-inventory)
 - [Ansible](http://www.ansible.com)
 - [dynamic inventory](http://docs.ansible.com/intro_dynamic_inventory.html)
 - [腾讯云](https://cloud.tencent.com/)
