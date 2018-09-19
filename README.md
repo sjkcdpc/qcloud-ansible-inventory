@@ -89,3 +89,6 @@ cache_disable = True
 - [dynamic inventory](http://docs.ansible.com/intro_dynamic_inventory.html)
 - [腾讯云](https://cloud.tencent.com/)
 - [腾讯云地域列表](https://cloud.tencent.com/document/api/213/15692#.E5.9C.B0.E5.9F.9F.E5.88.97.E8.A1.A8)
+
+# to-do-list
+- sdk设置区域为单个时，无法列出所有区域的服务器信息
